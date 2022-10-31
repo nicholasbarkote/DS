@@ -1,44 +1,62 @@
-class Employee {
-    constructor(name, Eid) {
+class Employee{
+    constructor(name, id){
         this.name = name;
-        this.Eid = Eid;
+        this.id = id
     }
 
-}
-class Pharmasy extends Employee{
+    toString() {
+        return `Employee ${this.name} has an id of ${this.id} `;
+      }
     
-    constructor(name){
-        this.name = name
-    }
-
-    writePrescription(name, Illness){
-        console.log(`This is a description for ${name} for illnes ${Illness}`)
-    }
-    collectCash(){
-        console.log(`Collected cash ${money} `);    
-    }
-}
-class Cashier extends Pharmasy{
-    
-    constructor(Eid) {
-        super(Eid)
-        this.Eid = Eid;
-    }
-
-    collectCash(money){
-        this.money += money;
-        console.log(`Collected cash ${money} `);
-    }
-}
-class Manager  extends Cashier{
-    
-    constructor(name, Eid) {
-        super(name,Eid)
-        this.name = name;
-        this.Eid = Eid;
-    }
-
 }
 
-let manager = new Manager("john",12)
+class Manager extends Employee{
+    constructor(name, id){
+        super(name, id)
+
+    }
+}
+
+
+class Cashier extends Employee {
+    constructor(name,id,cash){
+        super(name,id);
+        this.cash = cash;
+    }
+}
+
+class Pharmacist extends Employee{
+    constructor(name,id){
+        super(name,id);
+    }
+ 
+}
+
+
+let collectCash = {
+    cash:0,
+    collect:function(amount){
+        this.cash += amount;
+        console.log(`collect cashof amount ${this.cash}`);
+    }
+}
+let writePrescription = {
+    printPrescription:function(){
+        console.log(`Write prescription`);
+    }
+}
+
+let manager = new Manager("Manager name",1);
+let cashier = new Cashier("Cashier name",3);
+let pharmacy = new Pharmacist("Pharmacy Name",5);
+Object.assign(manager,collectCash,writePrescription)
+Object.assign(cashier,collectCash)
+Object.assign(pharmacy,writePrescription)
+
+manager.collect(56);
+manager.printPrescription();
+
+cashier.collect(45);
+
+console.log(manager);
 
